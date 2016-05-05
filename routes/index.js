@@ -26,5 +26,37 @@ router.get('/companies', function(req, res, next) {
   });
 });
 
+// *** GET all teams *** //
+router.get('/teams', function(req, res, next) {
+  queries.getAllTeams()
+  .then(function(users) {
+    res.status(200).json(users);
+  })
+  .catch(function(error) {
+    next(error);
+  });
+});
+
+// *** GET all listings *** //
+router.get('/listings', function(req, res, next) {
+  queries.getAllListings()
+  .then(function(users) {
+    res.status(200).json(users);
+  })
+  .catch(function(error) {
+    next(error);
+  });
+});
+
+// *** GET all applications *** //
+router.get('/applications', function(req, res, next) {
+  queries.getAllApplications()
+  .then(function(users) {
+    res.status(200).json(users);
+  })
+  .catch(function(error) {
+    next(error);
+  });
+});
 
 module.exports = router;

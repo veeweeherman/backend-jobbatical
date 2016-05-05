@@ -1,5 +1,8 @@
 exports.seed = function(knex, Promise) {
-  return knex('companies').del() // Deletes ALL existing entries
+  return knex('companies').del()
+    .then(function(){
+      console.log('deleted from COMPANIES table --env TEST!');
+    })
     .then(function() { // Inserts seed entries one by one in series
       return knex('companies').insert({
         id: 1,
@@ -12,5 +15,7 @@ exports.seed = function(knex, Promise) {
         name: 'Carl & Co',
         created_at: '2015-01-17 15:00'
       });
+    }).then(function(){
+      console.log('inserted data into COMPANIES table --env TEST!');
     });
 };
