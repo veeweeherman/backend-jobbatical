@@ -147,5 +147,34 @@ describe('API Routes', function() {
     });
   });
 
+  // Endpoint #2
+  describe('GET /api/v1/users/:id', function() {
+    it('should return a single user and their related info for endpoint 1', function(done) {
+      chai.request(server)
+      .get('/api/v1/users/1')
+      .end(function(err, res) {
+        res.should.have.status(200);
+        res.should.be.json; // jshint ignore:line
+        res.body.should.be.a('object');
+        res.body.should.have.property('id');
+        res.body.id.should.equal(1);
+        res.body.should.have.property('name');
+        res.body.name.should.equal('Mark');
+
+        res.body.should.have.property('companies');
+        res.body.companies.should.be.a('array');
+        res.body.companies.length.should.equal(1);
+
+        res.body.should.have.property('createdListings');
+        res.body.createdListings.should.be.a('array');
+        res.body.createdListings.length.should.equal(1);
+
+        res.body.should.have.property('applications');
+        res.body.applications.should.be.a('array');
+        res.body.applications.length.should.equal(0);
+        done();
+      });
+    });
+  });
 
 });

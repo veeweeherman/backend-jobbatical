@@ -18,8 +18,8 @@ router.get('/users', function(req, res, next) {
 // *** GET all companies *** //
 router.get('/companies', function(req, res, next) {
   queries.getAllCompanies()
-  .then(function(users) {
-    res.status(200).json(users);
+  .then(function(companies) {
+    res.status(200).json(companies);
   })
   .catch(function(error) {
     next(error);
@@ -29,8 +29,8 @@ router.get('/companies', function(req, res, next) {
 // *** GET all teams *** //
 router.get('/teams', function(req, res, next) {
   queries.getAllTeams()
-  .then(function(users) {
-    res.status(200).json(users);
+  .then(function(teams) {
+    res.status(200).json(teams);
   })
   .catch(function(error) {
     next(error);
@@ -40,8 +40,8 @@ router.get('/teams', function(req, res, next) {
 // *** GET all listings *** //
 router.get('/listings', function(req, res, next) {
   queries.getAllListings()
-  .then(function(users) {
-    res.status(200).json(users);
+  .then(function(listings) {
+    res.status(200).json(listings);
   })
   .catch(function(error) {
     next(error);
@@ -51,12 +51,29 @@ router.get('/listings', function(req, res, next) {
 // *** GET all applications *** //
 router.get('/applications', function(req, res, next) {
   queries.getAllApplications()
-  .then(function(users) {
-    res.status(200).json(users);
+  .then(function(applications) {
+    res.status(200).json(applications);
   })
   .catch(function(error) {
     next(error);
   });
 });
+
+
+// Queries to satisfy Endpoint #2
+// *** GET all related info for user by their id *** //
+router.get('/users/:id', function(req, res, next) {
+  queries.getUserByID(req.params.id)
+  .then(function(user) {
+    res.status(200).json(user[0]); // knex automatically returns results in an array??
+  })
+  .catch(function(error) {
+    next(error);
+  });
+});
+
+
+
+
 
 module.exports = router;

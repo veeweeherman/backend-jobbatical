@@ -47,11 +47,18 @@ function getAllApplications() {
   return Applications().select();
 }
 
+// get user by their ID
+function getUserByID(userID){
+  return Users().where('id', parseInt(userID)).select();
+
+}
 
 module.exports = {
   getAll: getAll,
   getAllCompanies: getAllCompanies,
   getAllTeams: getAllTeams,
   getAllListings: getAllListings,
-  getAllApplications: getAllApplications
+  getAllApplications: getAllApplications,
+
+  getUserByID: getUserByID
 };
