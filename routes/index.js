@@ -63,8 +63,9 @@ router.get('/applications', function(req, res, next) {
 // Queries to satisfy Endpoint #2
 // *** GET all related info for user by their id *** //
 router.get('/users/:id', function(req, res, next) {
-  // queries.getUserByID(req.params.id)
-  queries.getAllApplicationsByUserID(req.params.id)
+  queries.getUserByID(req.params.id)
+
+  // queries.getAllApplicationsByUserID(req.params.id)
   .then(function(user) {
     // inside .then is where the crazy knex obj returns the desired data?
     res.status(200).json(user);

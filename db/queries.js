@@ -51,20 +51,16 @@ function getAllApplications() {
 
 // get user's info by their ID
 function getUserByID(userID){
-  return Users().where('id', parseInt(userID)).select();
+  return Users().where('id', parseInt(userID)).select('id AS user_id', 'name AS user_name', 'created_at AS user_created_at');
 }
-// then get the associated listinsg based on user's ID
-function getListingsByUserID(userID){
-  return Listings().where('created_by', parseInt(userID)).select();
-}
+
 // then get all the applications its listing's info if this user has put put any applications recently
 function getAllApplicationsByUserID(userID){
   return Listings().innerJoin('applications', function() {
     this.on('applications.user_id', '=', parseInt(userID))
     .andOn('applications.listing_id', '=', 'listings.id')
-  }).select('applications.id AS applications_id', 'applications.created_at', 'applications.cover_letter', 'listings.id AS listings_id', 'listings.name', 'listings.description')
+  }).select('applications.id AS applications_id', 'applications.created_at AS listing_created_at', 'applications.cover_letter', 'listings.id AS listings_id', 'listings.name AS listings_name', 'listings.description')
 
-// applications.id AS applications_id, applications.created_at, applications.cover_letter, listings.id AS listings_id, listings.name, listings.description
 }
 
 
@@ -76,7 +72,7 @@ module.exports = {
   getAllApplications: getAllApplications,
 
   getUserByID: getUserByID,
-  getListingsByUserID: getListingsByUserID,
+
   getAllApplicationsByUserID: getAllApplicationsByUserID
 };
 
