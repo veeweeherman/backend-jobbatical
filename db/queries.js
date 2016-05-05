@@ -63,6 +63,41 @@ function getAllApplicationsByUserID(userID){
 
 }
 
+// get info for associated companies based on user's id
+function getAllCompaniesByUserID(userID){
+  return Applications()
+  .innerJoin('listings', function() {
+  this.on('applications.listing_id', '=', 'listings.id')
+  })
+  .innerJoin('teams', function() {
+    this.on('teams.user_id', '=', 'listings.created_by')
+  })
+  .innerJoin('companies', function(){
+    this.on('teams.company_id', '=', 'companies.id')
+  })
+  .where( 'applications.user_id', '=', userID)
+  .orWhere('teams.user_id', '=', userID)
+  .distinct()
+  .select('companies.id','companies.created_at','companies.name')
+
+
+  // select distinct 'first_name' from customers
+  // knex('customers')
+  // .distinct('first_name', 'last_name')
+  // .select()
+}
+// SELECT DISTINCT companies.id,companies.created_at,companies.name,
+  // (SELECT coalesce(contact_user, true) AS contact_user from teams where user_id = id)
+// FROM applications
+// INNER JOIN listings
+// ON applications.listing_id = listings.id
+// INNER JOIN teams
+// ON teams.user_id = listings.created_by
+// INNER JOIN companies
+// ON teams.company_id = companies.id
+// WHERE applications.user_id = id
+// " OR teams.user_id = id ;
+
 
 module.exports = {
   getAll: getAll,
@@ -72,8 +107,6 @@ module.exports = {
   getAllApplications: getAllApplications,
 
   getUserByID: getUserByID,
-
-  getAllApplicationsByUserID: getAllApplicationsByUserID
+  getAllApplicationsByUserID: getAllApplicationsByUserID,
+  getAllCompaniesByUserID: getAllCompaniesByUserID
 };
-
-// console.log(bazza._statements[0].value);
